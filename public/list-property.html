@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Create Listing - FIZZBO</title>
-  <script src="https://unpkg.com/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -48,20 +48,20 @@
 
   <form id="listingForm">
     <input type="text" id="address" placeholder="Street Address" required />
-    <input type="number" id="price" placeholder="Price (e.g. 400000)" required />
-    <input type="number" id="bedrooms" placeholder="Bedrooms" required />
-    <input type="number" id="bathrooms" placeholder="Bathrooms" required />
-    <textarea id="description" rows="4" placeholder="Description (auto-filled)"></textarea>
+    <input type="text" id="price" placeholder="Price (e.g. 400000)" required />
+    <input type="text" id="bedrooms" placeholder="Bedrooms" required />
+    <input type="text" id="bathrooms" placeholder="Bathrooms" required />
+    <textarea id="description" rows="4" placeholder="Description"></textarea>
     <button type="submit">Publish Listing</button>
   </form>
 
   <script>
-    // Supabase project credentials
+    // Supabase credentials
     const supabaseUrl = 'https://myhouseapp.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15aG91c2VhcHAiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcwNjc5MTc0NywiZXhwIjoxNzM4MzI3NzQ3fQ.a9t3OZgQk-UD_GD1Ac8_7ZG3kVqLy4HHkFeR0hYHwzo';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15aG91c2VhcHAiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY5MDM4ODAwMCwiZXhwIjoxOTk1OTY0MDAwfQ.yourTokenHere'; // REPLACE if token rotated
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Load local data from camera capture
+    // Load from localStorage
     const imageData = localStorage.getItem('capturedImage');
     const aiDescription = localStorage.getItem('aiDescription');
 
@@ -73,32 +73,29 @@
       document.getElementById('description').value = aiDescription;
     }
 
-    // Submit form to Supabase
     document.getElementById('listingForm').addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      const newListing = {
+      const listing = {
+        title: document.getElementById('address').value,
         address: document.getElementById('address').value,
         price: parseFloat(document.getElementById('price').value),
-        bedrooms: parseInt(document.getElementById('bedrooms').value),
-        bathrooms: parseInt(document.getElementById('bathrooms').value),
+        bedrooms: document.getElementById('bedrooms').value,
+        bathrooms: document.getElementById('bathrooms').value,
         description: document.getElementById('description').value,
         photo: imageData,
         created_at: new Date().toISOString(),
-        listing_status: 'active'
       };
 
       const { data, error } = await supabase
         .from('properties')
-        .insert([newListing]);
+        .insert([listing]);
 
       if (error) {
-        alert('Error: ' + error.message);
-        console.error('Supabase insert error:', error);
+        alert('Error publishing: ' + error.message);
       } else {
-        alert('Listing published successfully!');
-        localStorage.removeItem('capturedImage');
-        localStorage.removeItem('aiDescription');
+        alert('Listing published!');
+        localStorage.clear();
         window.location.href = '/listing.html';
       }
     });
@@ -106,3 +103,4 @@
 
 </body>
 </html>
+
