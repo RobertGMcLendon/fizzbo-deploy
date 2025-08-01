@@ -112,6 +112,19 @@
       font-weight: 600;
       cursor: pointer;
     }
+
+    .admin-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #a855f7;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
@@ -131,7 +144,7 @@
       <input type="file" accept="image/*" capture="environment" id="cameraInput" style="display: none;" />
       <button class="btn-purple" onclick="document.getElementById('cameraInput').click()">Start Listing Now</button>
 
-      <!-- CMA BUTTON WITH FULL CORRECT LINK -->
+      <!-- CMA BUTTON -->
       <a
         class="btn-green"
         href="http://app.cloudcma.com/api_widget/4bf5549a02c45b902c31b3d0b60eff45/show?post_url=https://app.cloudcma.com&source_url=ua"
@@ -147,6 +160,9 @@
       <button>Search</button>
     </div>
   </section>
+
+  <!-- ADMIN DASH LINK -->
+  <a href="/admin.html" class="admin-link">Admin</a>
 
   <script>
     const cameraInput = document.getElementById('cameraInput');

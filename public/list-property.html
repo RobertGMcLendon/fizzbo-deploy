@@ -1,346 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Listings - FIZZBO</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Listing - FIZZBO</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.39.5/dist/umd/supabase.min.js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0;
       padding: 2rem;
       background: #fff;
       color: #111;
+      max-width: 600px;
+      margin: auto;
     }
     h1 {
       text-align: center;
       margin-bottom: 2rem;
     }
-    .search-bar {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-    .search-bar input {
-      width: 300px;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 8px 0 0 8px;
-    }
-    .search-bar button {
-      padding: 0.75rem 1.5rem;
-      border: none;
-      background: linear-gradient(to right, #d946ef, #a855f7);
-      color: white;
-      font-weight: 600;
-      border-radius: 0 8px 8px 0;
-      cursor: pointer;
-    }
-    .listings {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
-    .card {
-      width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
-    .card img {
+    img {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
     }
-    .card-body {
+    textarea, input {
+      width: 100%;
       padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
-    .card-title {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-    .card-btns a {
-      display: inline-block;
-      margin-top: 1rem;
-      text-decoration: none;
+    button {
+      padding: 1rem 2rem;
+      background: #10b981;
       color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-    .view-btn {
-      background: #6366f1;
-      margin-right: 0.5rem;
-    }
-    .offer-btn {
-      background: #16a34a;
-      margin-right: 0.5rem;
-    }
-    .show-btn {
-      background: #f97316;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Browse Properties</h1>
 
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search by city, address or keyword...">
-    <button onclick="filterListings()">Search</button>
-  </div>
+  <h1>Create Listing</h1>
+  <img id="photoPreview" alt="Captured Photo" />
 
-  <div class="listings" id="listingsContainer">
-    <!-- Listings will be inserted here by JavaScript -->
-  </div>
-<script>
-const listings = [
-  {
-    title: "1234 Main St, Fort Collins, CO",
-    image: "https://propyimages.s3.amazonaws.com/fortcollins1.jpg",
-    viewLink: "/view/1",
-    offerLink: "https://propy.com/property/6876d82c699e5c2b950c50b1",
-    showLink: "https://calendly.com/fizzbo/1234main"
-  },
-  {
-    title: "5678 Lake Dr, Boulder, CO",
-    image: "https://propyimages.s3.amazonaws.com/boulder1.jpg",
-    viewLink: "/view/2",
-    offerLink: "https://propy.com/property/5d3f2a92699e5c2b950c71e3",
-    showLink: "https://calendly.com/fizzbo/5678lake"
-  },
-  {
-    title: "1030 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver3.jpg",
-    viewLink: "/view/3",
-    offerLink: "https://propy.com/property/denver3",
-    showLink: "https://calendly.com/fizzbo/denver3"
-  },
-  {
-    title: "1040 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver4.jpg",
-    viewLink: "/view/4",
-    offerLink: "https://propy.com/property/denver4",
-    showLink: "https://calendly.com/fizzbo/denver4"
-  },
-  {
-    title: "1050 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver5.jpg",
-    viewLink: "/view/5",
-    offerLink: "https://propy.com/property/denver5",
-    showLink: "https://calendly.com/fizzbo/denver5"
-  },
-  {
-    title: "1060 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver6.jpg",
-    viewLink: "/view/6",
-    offerLink: "https://propy.com/property/denver6",
-    showLink: "https://calendly.com/fizzbo/denver6"
-  },
-  {
-    title: "1070 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver7.jpg",
-    viewLink: "/view/7",
-    offerLink: "https://propy.com/property/denver7",
-    showLink: "https://calendly.com/fizzbo/denver7"
-  },
-  {
-    title: "1080 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver8.jpg",
-    viewLink: "/view/8",
-    offerLink: "https://propy.com/property/denver8",
-    showLink: "https://calendly.com/fizzbo/denver8"
-  },
-  {
-    title: "1090 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver9.jpg",
-    viewLink: "/view/9",
-    offerLink: "https://propy.com/property/denver9",
-    showLink: "https://calendly.com/fizzbo/denver9"
-  },
-  {
-    title: "1100 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver10.jpg",
-    viewLink: "/view/10",
-    offerLink: "https://propy.com/property/denver10",
-    showLink: "https://calendly.com/fizzbo/denver10"
-  },
-  {
-    title: "1110 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver11.jpg",
-    viewLink: "/view/11",
-    offerLink: "https://propy.com/property/denver11",
-    showLink: "https://calendly.com/fizzbo/denver11"
-  },
-  {
-    title: "1120 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver12.jpg",
-    viewLink: "/view/12",
-    offerLink: "https://propy.com/property/denver12",
-    showLink: "https://calendly.com/fizzbo/denver12"
-  },
-  {
-    title: "1130 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver13.jpg",
-    viewLink: "/view/13",
-    offerLink: "https://propy.com/property/denver13",
-    showLink: "https://calendly.com/fizzbo/denver13"
-  },
-  {
-    title: "1140 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver14.jpg",
-    viewLink: "/view/14",
-    offerLink: "https://propy.com/property/denver14",
-    showLink: "https://calendly.com/fizzbo/denver14"
-  },
-  {
-    title: "1150 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver15.jpg",
-    viewLink: "/view/15",
-    offerLink: "https://propy.com/property/denver15",
-    showLink: "https://calendly.com/fizzbo/denver15"
-  },
-  {
-    title: "1160 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver16.jpg",
-    viewLink: "/view/16",
-    offerLink: "https://propy.com/property/denver16",
-    showLink: "https://calendly.com/fizzbo/denver16"
-  },
-  {
-    title: "1170 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver17.jpg",
-    viewLink: "/view/17",
-    offerLink: "https://propy.com/property/denver17",
-    showLink: "https://calendly.com/fizzbo/denver17"
-  },
-  {
-    title: "1180 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver18.jpg",
-    viewLink: "/view/18",
-    offerLink: "https://propy.com/property/denver18",
-    showLink: "https://calendly.com/fizzbo/denver18"
-  },
-  {
-    title: "1190 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver19.jpg",
-    viewLink: "/view/19",
-    offerLink: "https://propy.com/property/denver19",
-    showLink: "https://calendly.com/fizzbo/denver19"
-  },
-  {
-    title: "1200 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver20.jpg",
-    viewLink: "/view/20",
-    offerLink: "https://propy.com/property/denver20",
-    showLink: "https://calendly.com/fizzbo/denver20"
-  },
-  {
-    title: "1210 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver21.jpg",
-    viewLink: "/view/21",
-    offerLink: "https://propy.com/property/denver21",
-    showLink: "https://calendly.com/fizzbo/denver21"
-  },
-  {
-    title: "1220 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver22.jpg",
-    viewLink: "/view/22",
-    offerLink: "https://propy.com/property/denver22",
-    showLink: "https://calendly.com/fizzbo/denver22"
-  },
-  {
-    title: "1230 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver23.jpg",
-    viewLink: "/view/23",
-    offerLink: "https://propy.com/property/denver23",
-    showLink: "https://calendly.com/fizzbo/denver23"
-  },
-  {
-    title: "1240 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver24.jpg",
-    viewLink: "/view/24",
-    offerLink: "https://propy.com/property/denver24",
-    showLink: "https://calendly.com/fizzbo/denver24"
-  },
-  {
-    title: "1250 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver25.jpg",
-    viewLink: "/view/25",
-    offerLink: "https://propy.com/property/denver25",
-    showLink: "https://calendly.com/fizzbo/denver25"
-  },
-  {
-    title: "1260 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver26.jpg",
-    viewLink: "/view/26",
-    offerLink: "https://propy.com/property/denver26",
-    showLink: "https://calendly.com/fizzbo/denver26"
-  },
-  {
-    title: "1270 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver27.jpg",
-    viewLink: "/view/27",
-    offerLink: "https://propy.com/property/denver27",
-    showLink: "https://calendly.com/fizzbo/denver27"
-  },
-  {
-    title: "1280 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver28.jpg",
-    viewLink: "/view/28",
-    offerLink: "https://propy.com/property/denver28",
-    showLink: "https://calendly.com/fizzbo/denver28"
-  },
-  {
-    title: "1290 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver29.jpg",
-    viewLink: "/view/29",
-    offerLink: "https://propy.com/property/denver29",
-    showLink: "https://calendly.com/fizzbo/denver29"
-  },
-  {
-    title: "1300 Sunset Blvd, Denver, CO",
-    image: "https://propyimages.s3.amazonaws.com/denver30.jpg",
-    viewLink: "/view/30",
-    offerLink: "https://propy.com/property/denver30",
-    showLink: "https://calendly.com/fizzbo/denver30"
-  }
-];
+  <form id="listingForm">
+    <input type="text" id="address" placeholder="Street Address" required />
+    <input type="number" id="price" placeholder="Price (e.g. 400000)" required />
+    <input type="number" id="bedrooms" placeholder="Bedrooms" required />
+    <input type="number" id="bathrooms" placeholder="Bathrooms" required />
+    <textarea id="description" rows="4" placeholder="Description (auto-filled)"></textarea>
+    <button type="submit">Publish Listing</button>
+  </form>
 
-const container = document.getElementById("listingsContainer");
-const input = document.getElementById("searchInput");
+  <script>
+    // Supabase project credentials
+    const supabaseUrl = 'https://myhouseapp.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15aG91c2VhcHAiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcwNjc5MTc0NywiZXhwIjoxNzM4MzI3NzQ3fQ.a9t3OZgQk-UD_GD1Ac8_7ZG3kVqLy4HHkFeR0hYHwzo';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-function renderListings(filtered) {
-  container.innerHTML = "";
-  filtered.forEach(l => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${l.image}" alt="Property">
-      <div class="card-body">
-        <div class="card-title">${l.title}</div>
-        <div class="card-btns">
-          <a class="view-btn" href="${l.viewLink}">View Listing</a>
-          <a class="offer-btn" href="${l.offerLink}" target="_blank">Make Offer</a>
-          <a class="show-btn" href="${l.showLink}" target="_blank">Schedule Showing</a>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
+    // Load local data from camera capture
+    const imageData = localStorage.getItem('capturedImage');
+    const aiDescription = localStorage.getItem('aiDescription');
 
-function filterListings() {
-  const q = input.value.toLowerCase();
-  const filtered = listings.filter(l => l.title.toLowerCase().includes(q));
-  renderListings(filtered);
-}
+    if (imageData) {
+      document.getElementById('photoPreview').src = imageData;
+    }
 
-// Initial render
-renderListings(listings);
-</script>
+    if (aiDescription) {
+      document.getElementById('description').value = aiDescription;
+    }
+
+    // Submit form to Supabase
+    document.getElementById('listingForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const newListing = {
+        address: document.getElementById('address').value,
+        price: parseFloat(document.getElementById('price').value),
+        bedrooms: parseInt(document.getElementById('bedrooms').value),
+        bathrooms: parseInt(document.getElementById('bathrooms').value),
+        description: document.getElementById('description').value,
+        photo: imageData,
+        created_at: new Date().toISOString(),
+        listing_status: 'active'
+      };
+
+      const { data, error } = await supabase
+        .from('properties')
+        .insert([newListing]);
+
+      if (error) {
+        alert('Error: ' + error.message);
+        console.error('Supabase insert error:', error);
+      } else {
+        alert('Listing published successfully!');
+        localStorage.removeItem('capturedImage');
+        localStorage.removeItem('aiDescription');
+        window.location.href = '/listing.html';
+      }
+    });
+  </script>
+
 </body>
 </html>
