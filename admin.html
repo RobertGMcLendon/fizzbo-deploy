@@ -1,0 +1,115 @@
+# Creating a basic HTML admin dashboard to manually input property listings
+admin_html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Add Listing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      background: linear-gradient(to right, #6366f1, #8b5cf6);
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .success-msg {
+      display: none;
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin - Add New Listing</h1>
+  <form id="listingForm">
+    <label for="title">Property Title (Address)</label>
+    <input type="text" id="title" required />
+
+    <label for="image">Image URL</label>
+    <input type="url" id="image" required />
+
+    <label for="viewLink">View Listing Link</label>
+    <input type="url" id="viewLink" required />
+
+    <label for="offerLink">Propy Offer Link</label>
+    <input type="url" id="offerLink" required />
+
+    <label for="showLink">Schedule Showing Link</label>
+    <input type="url" id="showLink" required />
+
+    <button type="submit">Add Listing</button>
+    <div class="success-msg" id="successMessage">✅ Listing added! (Not saved permanently)</div>
+  </form>
+
+  <script>
+    const form = document.getElementById('listingForm');
+    const successMsg = document.getElementById('successMessage');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const listing = {
+        title: document.getElementById('title').value,
+        image: document.getElementById('image').value,
+        viewLink: document.getElementById('viewLink').value,
+        offerLink: document.getElementById('offerLink').value,
+        showLink: document.getElementById('showLink').value
+      };
+
+      console.log("New Listing:", listing);
+      successMsg.style.display = "block";
+
+      // Optional: You can POST this data to a backend endpoint here
+      form.reset();
+    });
+  </script>
+</body>
+</html>
+"""
+
+# Save to HTML file
+admin_html_path = "/mnt/data/admin_dashboard_add_listing.html"
+with open(admin_html_path, "w", encoding="utf-8") as f:
+    f.write(admin_html)
+
+admin_html_path

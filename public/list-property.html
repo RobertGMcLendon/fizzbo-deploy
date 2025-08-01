@@ -1,5 +1,4 @@
-# Wrap the original full HTML structure around the listings script block to generate a full page
-html_top = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -97,16 +96,251 @@ html_top = """<!DOCTYPE html>
   <div class="listings" id="listingsContainer">
     <!-- Listings will be inserted here by JavaScript -->
   </div>
-"""
+<script>
+const listings = [
+  {
+    title: "1234 Main St, Fort Collins, CO",
+    image: "https://propyimages.s3.amazonaws.com/fortcollins1.jpg",
+    viewLink: "/view/1",
+    offerLink: "https://propy.com/property/6876d82c699e5c2b950c50b1",
+    showLink: "https://calendly.com/fizzbo/1234main"
+  },
+  {
+    title: "5678 Lake Dr, Boulder, CO",
+    image: "https://propyimages.s3.amazonaws.com/boulder1.jpg",
+    viewLink: "/view/2",
+    offerLink: "https://propy.com/property/5d3f2a92699e5c2b950c71e3",
+    showLink: "https://calendly.com/fizzbo/5678lake"
+  },
+  {
+    title: "1030 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver3.jpg",
+    viewLink: "/view/3",
+    offerLink: "https://propy.com/property/denver3",
+    showLink: "https://calendly.com/fizzbo/denver3"
+  },
+  {
+    title: "1040 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver4.jpg",
+    viewLink: "/view/4",
+    offerLink: "https://propy.com/property/denver4",
+    showLink: "https://calendly.com/fizzbo/denver4"
+  },
+  {
+    title: "1050 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver5.jpg",
+    viewLink: "/view/5",
+    offerLink: "https://propy.com/property/denver5",
+    showLink: "https://calendly.com/fizzbo/denver5"
+  },
+  {
+    title: "1060 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver6.jpg",
+    viewLink: "/view/6",
+    offerLink: "https://propy.com/property/denver6",
+    showLink: "https://calendly.com/fizzbo/denver6"
+  },
+  {
+    title: "1070 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver7.jpg",
+    viewLink: "/view/7",
+    offerLink: "https://propy.com/property/denver7",
+    showLink: "https://calendly.com/fizzbo/denver7"
+  },
+  {
+    title: "1080 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver8.jpg",
+    viewLink: "/view/8",
+    offerLink: "https://propy.com/property/denver8",
+    showLink: "https://calendly.com/fizzbo/denver8"
+  },
+  {
+    title: "1090 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver9.jpg",
+    viewLink: "/view/9",
+    offerLink: "https://propy.com/property/denver9",
+    showLink: "https://calendly.com/fizzbo/denver9"
+  },
+  {
+    title: "1100 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver10.jpg",
+    viewLink: "/view/10",
+    offerLink: "https://propy.com/property/denver10",
+    showLink: "https://calendly.com/fizzbo/denver10"
+  },
+  {
+    title: "1110 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver11.jpg",
+    viewLink: "/view/11",
+    offerLink: "https://propy.com/property/denver11",
+    showLink: "https://calendly.com/fizzbo/denver11"
+  },
+  {
+    title: "1120 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver12.jpg",
+    viewLink: "/view/12",
+    offerLink: "https://propy.com/property/denver12",
+    showLink: "https://calendly.com/fizzbo/denver12"
+  },
+  {
+    title: "1130 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver13.jpg",
+    viewLink: "/view/13",
+    offerLink: "https://propy.com/property/denver13",
+    showLink: "https://calendly.com/fizzbo/denver13"
+  },
+  {
+    title: "1140 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver14.jpg",
+    viewLink: "/view/14",
+    offerLink: "https://propy.com/property/denver14",
+    showLink: "https://calendly.com/fizzbo/denver14"
+  },
+  {
+    title: "1150 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver15.jpg",
+    viewLink: "/view/15",
+    offerLink: "https://propy.com/property/denver15",
+    showLink: "https://calendly.com/fizzbo/denver15"
+  },
+  {
+    title: "1160 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver16.jpg",
+    viewLink: "/view/16",
+    offerLink: "https://propy.com/property/denver16",
+    showLink: "https://calendly.com/fizzbo/denver16"
+  },
+  {
+    title: "1170 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver17.jpg",
+    viewLink: "/view/17",
+    offerLink: "https://propy.com/property/denver17",
+    showLink: "https://calendly.com/fizzbo/denver17"
+  },
+  {
+    title: "1180 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver18.jpg",
+    viewLink: "/view/18",
+    offerLink: "https://propy.com/property/denver18",
+    showLink: "https://calendly.com/fizzbo/denver18"
+  },
+  {
+    title: "1190 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver19.jpg",
+    viewLink: "/view/19",
+    offerLink: "https://propy.com/property/denver19",
+    showLink: "https://calendly.com/fizzbo/denver19"
+  },
+  {
+    title: "1200 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver20.jpg",
+    viewLink: "/view/20",
+    offerLink: "https://propy.com/property/denver20",
+    showLink: "https://calendly.com/fizzbo/denver20"
+  },
+  {
+    title: "1210 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver21.jpg",
+    viewLink: "/view/21",
+    offerLink: "https://propy.com/property/denver21",
+    showLink: "https://calendly.com/fizzbo/denver21"
+  },
+  {
+    title: "1220 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver22.jpg",
+    viewLink: "/view/22",
+    offerLink: "https://propy.com/property/denver22",
+    showLink: "https://calendly.com/fizzbo/denver22"
+  },
+  {
+    title: "1230 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver23.jpg",
+    viewLink: "/view/23",
+    offerLink: "https://propy.com/property/denver23",
+    showLink: "https://calendly.com/fizzbo/denver23"
+  },
+  {
+    title: "1240 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver24.jpg",
+    viewLink: "/view/24",
+    offerLink: "https://propy.com/property/denver24",
+    showLink: "https://calendly.com/fizzbo/denver24"
+  },
+  {
+    title: "1250 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver25.jpg",
+    viewLink: "/view/25",
+    offerLink: "https://propy.com/property/denver25",
+    showLink: "https://calendly.com/fizzbo/denver25"
+  },
+  {
+    title: "1260 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver26.jpg",
+    viewLink: "/view/26",
+    offerLink: "https://propy.com/property/denver26",
+    showLink: "https://calendly.com/fizzbo/denver26"
+  },
+  {
+    title: "1270 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver27.jpg",
+    viewLink: "/view/27",
+    offerLink: "https://propy.com/property/denver27",
+    showLink: "https://calendly.com/fizzbo/denver27"
+  },
+  {
+    title: "1280 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver28.jpg",
+    viewLink: "/view/28",
+    offerLink: "https://propy.com/property/denver28",
+    showLink: "https://calendly.com/fizzbo/denver28"
+  },
+  {
+    title: "1290 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver29.jpg",
+    viewLink: "/view/29",
+    offerLink: "https://propy.com/property/denver29",
+    showLink: "https://calendly.com/fizzbo/denver29"
+  },
+  {
+    title: "1300 Sunset Blvd, Denver, CO",
+    image: "https://propyimages.s3.amazonaws.com/denver30.jpg",
+    viewLink: "/view/30",
+    offerLink: "https://propy.com/property/denver30",
+    showLink: "https://calendly.com/fizzbo/denver30"
+  }
+];
 
-html_bottom = "</body>\n</html>"
+const container = document.getElementById("listingsContainer");
+const input = document.getElementById("searchInput");
 
-# Combine full HTML
-full_html = html_top + script_html + html_bottom
+function renderListings(filtered) {
+  container.innerHTML = "";
+  filtered.forEach(l => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${l.image}" alt="Property">
+      <div class="card-body">
+        <div class="card-title">${l.title}</div>
+        <div class="card-btns">
+          <a class="view-btn" href="${l.viewLink}">View Listing</a>
+          <a class="offer-btn" href="${l.offerLink}" target="_blank">Make Offer</a>
+          <a class="show-btn" href="${l.showLink}" target="_blank">Schedule Showing</a>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
 
-# Save to HTML file
-full_html_path = "/mnt/data/fizzbo_listings_fullpage.html"
-with open(full_html_path, "w", encoding="utf-8") as f:
-    f.write(full_html)
+function filterListings() {
+  const q = input.value.toLowerCase();
+  const filtered = listings.filter(l => l.title.toLowerCase().includes(q));
+  renderListings(filtered);
+}
 
-full_html_path
+// Initial render
+renderListings(listings);
+</script>
+</body>
+</html>
