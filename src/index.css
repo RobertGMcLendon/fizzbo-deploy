@@ -1,0 +1,20 @@
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+.nav-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  color: #ffffff;
+  border: none;
+}
