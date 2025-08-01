@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FIZZBO</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -67,14 +67,18 @@
       justify-content: center;
       gap: 1.5rem;
       margin-top: 2rem;
+      flex-wrap: wrap;
     }
 
+    .cta-buttons button,
     .cta-buttons a {
       padding: 1rem 2rem;
       border-radius: 12px;
       font-weight: 600;
       color: white;
       text-decoration: none;
+      border: none;
+      cursor: pointer;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
@@ -123,13 +127,35 @@
     <h1>Sell Your Home <span>Fast</span></h1>
     <p>Take a photo, get instant property details, and list your home in minutes. No agents, no fees.</p>
     <div class="cta-buttons">
-      <a class="btn-purple" href="#">Start Listing Now</a>
-      <a class="btn-green" href="#">Get CMA Report</a>
+      <!-- CAMERA BUTTON -->
+      <input type="file" accept="image/*" capture="environment" id="cameraInput" style="display: none;" />
+      <button class="btn-purple" onclick="document.getElementById('cameraInput').click()">Start Listing Now</button>
+
+      <!-- CMA BUTTON WITH FULL CORRECT LINK -->
+      <a
+        class="btn-green"
+        href="http://app.cloudcma.com/api_widget/4bf5549a02c45b902c31b3d0b60eff45/show?post_url=https://app.cloudcma.com&source_url=ua"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Get CMA Report
+      </a>
     </div>
+
     <div class="search-bar">
-      <input type="text" placeholder="Search by City...">
+      <input type="text" placeholder="Search by City..." />
       <button>Search</button>
     </div>
   </section>
+
+  <script>
+    const cameraInput = document.getElementById('cameraInput');
+
+    cameraInput.addEventListener('change', function () {
+      if (cameraInput.files.length > 0) {
+        window.location.href = "/list-property.html";
+      }
+    });
+  </script>
 </body>
 </html>
